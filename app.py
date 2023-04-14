@@ -33,15 +33,13 @@ def get_data():
     
     #agg =min
     if agg=="min" :
-        temp_min=min([tmp["value"] for tmp in data]) # récupérer la température minimale 
-        data_final=[val for val in data if val["value"]==temp_min]
-        print(data_final)
+        data_min=min([tmp["value"] for tmp in data]) # récupérer la température minimale 
+        data_final=[val for val in data if val["value"]==data_min]
         pass
     # agg=max
     elif agg=="max":
-        temp_min=max([tmp["value"] for tmp in data]) # récupérer la température maximale 
-        data_final=[val for val in data if val["value"]==temp_min]
-        print(data_final)
+        data_max=max([tmp["value"] for tmp in data]) # récupérer la température maximale 
+        data_final=[val for val in data if val["value"]==data_max]
         pass    
     # agg= avg
     elif agg=="avg":
