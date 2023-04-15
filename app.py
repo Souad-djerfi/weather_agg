@@ -5,11 +5,20 @@ import agregation
 
 # créer une instance Flask
 app = Flask(__name__) 
-
+# tester si une chaine de caractère est float
+def is_valid_float(element):
+    try:
+        float(element)
+        return True
+    except ValueError:
+        return False
+    
+# formater date 
 def formatdate (date):
     date_obj=datetime.fromisoformat(date)
     return date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
-# endpoint temperature et humidity
+
+#endpoint temperature et humidity
 @app.route('/api/v1/air/temperature')
 @app.route('/api/v1/air/humidity')
 def get_data():
@@ -19,9 +28,13 @@ def get_data():
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
     agg = request.args.get('agg')
-    #      
-    param=''  
+    print("start:", start, type(start), "longitude", longitude,type(longitude))
+    # tester si les parametres introduits sont valables 
+    if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude):
+        return jsonify({'error': 'Invalid parametre value'}), 400
     
+    #      
+    param='' 
     if request.path == '/api/v1/air/temperature':
         param='airTemperature'
     elif request.path == '/api/v1/air/humidity':
@@ -36,9 +49,9 @@ def get_data():
     data = [{"ts": formatdate(item["time"]), "value": item[param]["noaa"] } for item in response.json()["hours"]]
      
     # données que notre API renvoie       
-    if agg in ("max","min","avg"):
-        return jsonify({"data": agregation.agre(agg,start, end,data)})
-    return jsonify({'error': 'Invalid agg value'}), 400 
+         
+    return jsonify({"data": agregation.agre(agg,start, end,data)})
+    
         
   
 if __name__ == '__main__':
