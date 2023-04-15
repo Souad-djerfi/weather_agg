@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
-import requests 
-import datetime
+from datetime import datetime, timedelta
+import requests
+import agregation 
 
 # créer une instance Flask
 app = Flask(__name__) 
 
+def formatdate (date):
+    date_obj=datetime.fromisoformat(date)
+    return date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
 # endpoint temperature et humidity
 @app.route('/api/v1/air/temperature')
 @app.route('/api/v1/air/humidity')
@@ -15,43 +19,28 @@ def get_data():
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
     agg = request.args.get('agg')
+    #      
+    param=''  
     
     if request.path == '/api/v1/air/temperature':
-        # récupérer données météo avec une requête à stormglass.io
-        url = f"https://api.stormglass.io/v2/weather/point?lat={latitude}&lng={longitude}&start={start}&end={end}&params=airTemperature"
-        # Transformez les données récupérées de stormglass.io en JSON
-        data = [{"ts": item["time"], "value": item["airTemperature"]["noaa"] } for item in response.json()["hours"]]
+        param='airTemperature'
+    elif request.path == '/api/v1/air/humidity':
+        param='humidity'    
         
-    elif request.path == '/api/v1/air/humidity':   
-        url = f"https://api.stormglass.io/v2/weather/point?lat={latitude}&lng={longitude}&start={start}&end={end}&params=humidity" 
-        
+    # récupérer données météo avec une requête à stormglass.io
+    url = f"https://api.stormglass.io/v2/weather/point?lat={latitude}&lng={longitude}&start={start}&end={end}&params={param}"
+    # Transformez les données récupérées de stormglass.io en JSON
     headers = {"Authorization": "2b64561c-da39-11ed-bc36-0242ac130002-2b6456c6-da39-11ed-bc36-0242ac130002"} #  clé API stormglass.io
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers) 
+    #selectionner que les données dont on a besoin dans data
+    data = [{"ts": formatdate(item["time"]), "value": item[param]["noaa"] } for item in response.json()["hours"]]
+     
+    # données que notre API renvoie       
+    if agg in ("max","min","avg"):
+        return jsonify({"data": agregation.agre(agg,start, end,data)})
+    return jsonify({'error': 'Invalid agg value'}), 400 
         
-    #données à renvoyer
-    data_final =[] 
-    
-    #agg =min
-    if agg=="min" :
-        data_min=min([tmp["value"] for tmp in data]) # récupérer la température minimale 
-        data_final=[val for val in data if val["value"]==data_min]
-        pass
-    # agg=max
-    elif agg=="max":
-        data_max=max([tmp["value"] for tmp in data]) # récupérer la température maximale 
-        data_final=[val for val in data if val["value"]==data_max]
-        pass    
-    # agg= avg
-    elif agg=="avg":
-        
-        pass
-    # erreur si agg n'est pas valide
-    else:
-        return jsonify({'error': 'Invalid agg value'}), 400
-        
-    return jsonify({"data": data_final})
-
-
+  
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
