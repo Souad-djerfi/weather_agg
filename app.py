@@ -33,7 +33,7 @@ def get_data():
     if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude):
         return jsonify({'error': 'Invalid parametre value'}), 400
     
-    #      
+    # temperature ou humidity     
     param='' 
     if request.path == '/api/v1/air/temperature':
         param='airTemperature'
