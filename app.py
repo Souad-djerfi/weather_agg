@@ -14,7 +14,7 @@ def is_valid_float(element):
     except ValueError:
         return False
     
-# formater date 
+# formater date au format souhaité
 def formatdate (date):
     date_obj=datetime.fromisoformat(date)
     return date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
