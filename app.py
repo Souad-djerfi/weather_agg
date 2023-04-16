@@ -5,6 +5,7 @@ import agregation
 
 # créer une instance Flask
 app = Flask(__name__) 
+
 # tester si une chaine de caractère est float
 def is_valid_float(element):
     try:
@@ -28,7 +29,7 @@ def get_data():
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
     agg = request.args.get('agg')
-    print("start:", start, type(start), "longitude", longitude,type(longitude))
+   
     # tester si les parametres introduits sont valables 
     if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude):
         return jsonify({'error': 'Invalid parametre value'}), 400
@@ -50,7 +51,7 @@ def get_data():
      
     # données que notre API renvoie       
     return jsonify({"data": agregation.agre(agg,start, end,data)})
-    
+
  # run app in debug mode on port 5000   
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
