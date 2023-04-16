@@ -23,6 +23,7 @@ def formatdate (date):
 @app.route('/api/v1/air/temperature')
 @app.route('/api/v1/air/humidity')
 def get_data():
+    
     # Récupérez les paramètres query
     start = request.args.get('start')
     end = request.args.get('end') or datetime.datetime.utcnow().isoformat() # cas si "end" est ommit,on prend now comme date de fin.)
