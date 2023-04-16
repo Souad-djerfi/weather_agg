@@ -33,5 +33,6 @@ class TestTemperatureAPI(unittest.TestCase):
             'agg': 'invalid_agg_type'
         }
         response = requests.get(self.base_url, params=params) # envoyer une requete GET à notre API avec paramètres invalides et récupérer la reponse
+        #vérifier que le statut de réponse est 400 et que la réponse contient la clé 'error'.
         self.assertEqual(response.status_code, 400)
         self.assertTrue('error' in response.json())
