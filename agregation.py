@@ -6,7 +6,7 @@ import statistics
 #
 def agre(type, start, end, data):
     
-    #convertir les dates start et end ( UNIX) en  datetime
+    #convertir les dates start et end ( UNIX) en  datetime ,;,;,
     data_final=[]
     start_dt=datetime.fromtimestamp(int(start))
     end_dt=datetime.fromtimestamp(int(end)) 
