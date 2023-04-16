@@ -9,8 +9,10 @@ def agre(type, start, end, data):
     data_final=[]
     start_dt=datetime.fromtimestamp(int(start))
     end_dt=datetime.fromtimestamp(int(end)) 
+
     # tester si l'interval entre start_dt et end_dt > 24 
     if (end_dt-start_dt).total_seconds()/3600 > 24:
+        
     #calculer nombre d'internval de 2h
         nbr_interval=(end_dt - start_dt) // timedelta(hours=2)
         for i in range(nbr_interval) :
