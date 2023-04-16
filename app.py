@@ -49,9 +49,9 @@ def get_data():
     data = [{"ts": formatdate(item["time"]), "value": item[param]["noaa"] } for item in response.json()["hours"]]
      
     # données que notre API renvoie       
-         
     return jsonify({"data": agregation.agre(agg,start, end,data)})
     
+ # run app in debug mode on port 5000   
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
