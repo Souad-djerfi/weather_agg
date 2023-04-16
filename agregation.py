@@ -19,13 +19,13 @@ def agre(type, start, end, data):
             interval_end = interval_start + timedelta(hours=2)
             if type=="max":
                 data_agr=max([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end])
-                pass
+                
             elif type=="min":
                 data_agr=min([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end])
-                pass
+                
             elif type=="avg":
                 data_agr=statistics.mean([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end])
-                pass
+                
             
             data_final.append({
                   'value': data_agr,
