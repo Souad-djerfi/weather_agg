@@ -14,8 +14,8 @@ class TestTemperatureAPI(unittest.TestCase):
     
     def test_humidity_with_valid_params(self):
         params = {
-            'start': '1518898500',
-            'end': '1618506954',
+            'start': '1618486400',
+            'end':   '1618606400',
             'latitude': 48.8566,
             'longitude': 2.3522,
             'agg': 'max'
