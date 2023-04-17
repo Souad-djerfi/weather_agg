@@ -23,7 +23,7 @@ def formatdate (date):
 @app.route('/api/v1/air/temperature')
 @app.route('/api/v1/air/humidity')
 def get_data():
-    
+
     # Récupérez les paramètres query
     start = request.args.get('start')
     end = request.args.get('end') or datetime.datetime.utcnow().isoformat() # cas si "end" est ommit,on prend now comme date de fin.)
@@ -32,7 +32,7 @@ def get_data():
     agg = request.args.get('agg')
    
     # tester si les parametres introduits sont valables 
-    if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude):
+    if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude) or int(start)>int(end):
         return jsonify({'error': 'Invalid parametre value'}), 400
     
     # temperature ou humidity     

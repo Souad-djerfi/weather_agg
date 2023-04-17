@@ -14,7 +14,7 @@ class TestTemperatureAPI(unittest.TestCase):
     
     def test_temperature_with_valid_params(self):
         params = {
-            'start': '1618400000',
+            'start': '1611400000',
             'end': '1618506400',
             'latitude': 48.8566,
             'longitude': 2.3522,
