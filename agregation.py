@@ -13,23 +13,23 @@ def agre(type, start, end, data):
     # tester si l'interval entre start_dt et end_dt > 24 
     if (end_dt-start_dt).total_seconds()/3600 > 24:
 
-
+        
     #calculer nombre d'internval de 2h
         nbr_interval=(end_dt - start_dt) // timedelta(hours=2)
         for i in range(nbr_interval) :
             interval_start = start_dt + i * timedelta(hours=2)
             interval_end = interval_start + timedelta(hours=2)
-            
-            if type=="max":
-                data_agr=max([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end])
+            tmp=[tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end] #liste de temperature dans l'intervale de 02h
+            if not tmp :
+                data_agr=0 # dans le cas ou y a pas eu de temperatures relevées dans cette tranche j'ai proposé de donner 0 à l aggregation à revoir avec le responsable
+            else : 
+                if type=="max":
+                    data_agr=max(tmp)
+                elif type=="min":
+                    data_agr=min(tmp)
+                elif type=="avg":
+                    data_agr=round(statistics.mean(tmp),2)
                 
-            elif type=="min":
-                data_agr=min([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end])
-                
-            elif type=="avg":
-                data_agr=round(statistics.mean([tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end]),2)
-                
-            
             data_final.append({
                   'value': data_agr,
                   'ts': app.formatdate(interval_start.isoformat())

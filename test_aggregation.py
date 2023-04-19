@@ -83,7 +83,7 @@ class TestAggregation(unittest.TestCase):
                            {'value': 23, 'ts': '2021-04-16T11:33:20.000Z'}]
         
         result = agregation.agre('max', self.start, self.end, self.data)
-        self.assertEqual(result, expected_result)
+        self.assertEqual(result, expected_result, f"Aggregation max is incorrect")
 
     def test_min_aggregation(self):
         
@@ -103,7 +103,7 @@ class TestAggregation(unittest.TestCase):
                            ]
         
         result = agregation.agre('min', self.start, self.end, self.data)
-        self.assertEqual(result, expected_result)
+        self.assertEqual(result, expected_result,f"Aggregation min is incorrect")
 
 
 
@@ -126,6 +126,6 @@ def test_avg_aggregation(self):
     
         
     result = agregation.agre('avg', self.start, self.end, self.data)
-    self.assertEqual(result, expected_result)
+    self.assertEqual(result, expected_result, f"Aggregation avg is incorrect")
     
         
