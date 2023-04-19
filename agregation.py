@@ -21,7 +21,7 @@ def agre(type, start, end, data):
             interval_end = interval_start + timedelta(hours=2)
             tmp=[tmp["value"] for tmp in data if interval_start <= datetime.fromisoformat(tmp["ts"][:-1]) <interval_end] #liste de temperature dans l'intervale de 02h
             if not tmp :
-                data_agr=0 # dans le cas ou y a pas eu de temperatures relevées dans cette tranche j'ai proposé de donner 0 à l aggregation à revoir avec le responsable
+                data_agr=0 # dans le cas ou y a pas eu de temperatures relevées dans lAPI meteo dans cette tranche j'ai proposé de donner 0 à l aggregation à revoir avec le responsable
             else : 
                 if type=="max":
                     data_agr=max(tmp)
