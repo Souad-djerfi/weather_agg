@@ -1,5 +1,6 @@
 import unittest
 import requests
+import datetime
 
 """créer une classe qui hérite de unittest.TestCase. 
        Cette classe contient des méthodes de test qui effectuent des assertions 
@@ -35,3 +36,51 @@ class TestTemperatureAPI(unittest.TestCase):
         response = requests.get(self.base_url, params=params) # envoyer une requete GET à notre API avec paramètres invalides et récupérer la reponse
         self.assertEqual(response.status_code, 400)# verifie le status de la réponse est 400
         self.assertTrue('error' in response.json())# vérifie si la réponse contient la clé error.
+
+    def test_humidity_with_missing_params(self):
+        params = {
+            'start': '1618486400',
+            'end': '1618606400',
+            'agg': 'avg'
+        }
+        response = requests.get(self.base_url, params=params)
+        self.assertEqual(response.status_code, 400)
+        self.assertTrue('error' in response.json())
+
+
+    def test_humidity_with_end_before_start(self):
+        params = {
+            'start': '1618606400',
+            'end':   '1618486400',
+            'latitude': 48.8566,
+            'longitude': 2.3522,
+            'agg': 'avg'
+        }
+        response = requests.get(self.base_url, params=params)
+        self.assertEqual(response.status_code, 400)
+        self.assertTrue('error' in response.json()) 
+
+    def test_end_date_greater_than_today(self):
+        today = datetime.datetime.now().strftime('%s')
+        params = {
+            'start': '1618486400',
+            'end': str(int(today) + 3600), # end est dans une heure après aujourd'hui
+            'latitude': 48.8566,
+            'longitude': 2.3522,
+            'agg': 'avg'
+        }
+        response = requests.get(self.base_url, params=params)
+        self.assertEqual(response.status_code, 400)
+        self.assertTrue('error' in response.json())    
+
+    def test_humidity_with_end_omitted(self):
+        params = {
+            'start': '1681718982',
+            'latitude': 48.8566,
+            'longitude': 2.3522,
+            'agg': 'avg'
+        }
+        response = requests.get(self.base_url, params=params)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('data' in response.json())
+        

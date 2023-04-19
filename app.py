@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
 import requests
 import agregation 
+import time
 
 # créer une instance Flask
 app = Flask(__name__) 
@@ -26,14 +27,21 @@ def get_data():
 
     # Récupérez les paramètres query
     start = request.args.get('start')
-    end = request.args.get('end') or datetime.datetime.utcnow().isoformat() # cas si "end" est ommit,on prend now comme date de fin.)
+    end = request.args.get('end') or str(time. time() )# cas si "end" est ommi,on prend now comme date de fin.)
     longitude = request.args.get('longitude')
     latitude = request.args.get('latitude')
     agg = request.args.get('agg')
+
+    print('ennnnnnnnnnnnnndddddddddd', end, type(end))
+    
+    # Vérifiez que tous les paramètres requis sont présents
+    if not all([start, end, longitude, latitude, agg]):
+       
+        return jsonify({'error': 'Missing parameter(s)'}), 400
    
-    # tester si les parametres introduits sont valables 
-    if agg not in ("max","min","avg") or not start.isdigit() or not end.isdigit() or not is_valid_float(longitude) or not is_valid_float(latitude) or int(start)>int(end):
-        return jsonify({'error': 'Invalid parametre value'}), 400
+    # Vérifier si les parametres introduits sont valables 
+    if agg not in ("max","min","avg") or not is_valid_float(start) or not is_valid_float(end) or not is_valid_float(longitude) or not is_valid_float(latitude) or float(start)>float(end) or float(end)>time. time():
+        return jsonify({'error': 'Invalid parameter value'}), 400
     
     # temperature ou humidity     
     param='' 
@@ -49,8 +57,8 @@ def get_data():
     response = requests.get(url, headers=headers) 
     #selectionner que les données dont on a besoin dans data
     data = [{"ts": formatdate(item["time"]), "value": item[param]["noaa"] } for item in response.json()["hours"]]
-     
-    # données que notre API renvoie       
+    print("dataaaaaaaaaaaaaaaaaaaaaaaaa", data)
+    # données que notre API renvoie:    
     return jsonify({"data": agregation.agre(agg,start, end,data)})
 
  # executer app en mode debug sur port 5000   
