@@ -75,7 +75,7 @@ class TestTemperatureAPI(unittest.TestCase):
 
     def test_temperature_with_end_omitted(self):
         params = {
-            'start': '1681718982',
+            'start': '1681818982',
             'latitude': 48.8566,
             'longitude': 2.3522,
             'agg': 'avg'
