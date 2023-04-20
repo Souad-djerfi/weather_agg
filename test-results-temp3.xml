@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<testsuite name="test_humidity.TestHumidityAPI-20230420104245" tests="6" time="1.020" failures="0" errors="0">
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_end_date_greater_than_today" time="0.004"/>
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_humidity_with_end_before_start" time="0.011"/>
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_humidity_with_end_omitted" time="0.592"/>
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_humidity_with_invalid_params" time="0.004"/>
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_humidity_with_missing_params" time="0.003"/>
+	<testcase classname="test_humidity.TestHumidityAPI" name="test_humidity_with_valid_params" time="0.406"/>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>

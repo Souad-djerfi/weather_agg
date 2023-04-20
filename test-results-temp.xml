@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<testsuite name="test_temperature.TestTemperatureAPI-20230420104244" tests="6" time="0.832" failures="0" errors="0">
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_end_date_greater_than_today" time="0.006"/>
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_temperature_with_end_before_start" time="0.004"/>
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_temperature_with_end_omitted" time="0.342"/>
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_temperature_with_invalid_params" time="0.004"/>
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_temperature_with_missing_params" time="0.003"/>
+	<testcase classname="test_temperature.TestTemperatureAPI" name="test_temperature_with_valid_params" time="0.472"/>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<testsuite name="test_aggregation.TestAggregation-20230420104245" tests="2" time="0.001" failures="0" errors="0">
+	<testcase classname="test_aggregation.TestAggregation" name="test_max_aggregation" time="0.001"/>
+	<testcase classname="test_aggregation.TestAggregation" name="test_min_aggregation" time="0.000"/>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>
