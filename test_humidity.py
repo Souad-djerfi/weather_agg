@@ -7,7 +7,7 @@ import datetime
        pour vérifier que le comportement du code est conforme aux attentes
     """
 
-class TestTemperatureAPI(unittest.TestCase):
+class TestHumidityAPI(unittest.TestCase):
     
     base_url = 'http://localhost:5000//api/v1/air/humidity'
     """_summary_

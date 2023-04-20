@@ -33,11 +33,8 @@ def get_data():
     latitude = request.args.get('latitude')
     agg = request.args.get('agg')
 
-    print('ennnnnnnnnnnnnndddddddddd', end, type(end))
-    
     # Vérifiez que tous les paramètres requis sont présents
     if not all([start, end, longitude, latitude, agg]):
-       
         return jsonify({'error': 'Missing parameter(s)'}), 400
    
     # Vérifier si les parametres introduits sont valables 
@@ -58,7 +55,7 @@ def get_data():
     response = requests.get(url, headers=headers) 
     #selectionner que les données dont on a besoin dans data
     data = [{"ts": formatdate(item["time"]), "value": item[param]["noaa"] } for item in response.json()["hours"]]
-    print("dataaaaaaaaaaaaaaaaaaaaaaaaa", data)
+    
     # données que notre API renvoie:    
     return jsonify({"data": agregation.agre(agg,start, end,data)})
 
